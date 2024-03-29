@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Sale>
+
+@{
+    ViewData["Title"] = "Sales Data";
+}
+
+<h1>Quarterly Sales Data</h1>
+
+<div>
+    <label>Filter by Employee:</label>
+    @Html.DropDownList("EmployeeId", null, htmlAttributes: new { @onchange = "submitForm()" })
+</div>
+<form id="filterForm" method="post" asp-action="FilterSales">
+    <input type="hidden" name="employeeId" id="selectedEmployeeId" value="0">
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Year</th>
+            <th>Quarter</th>
+            <th>Employee</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Year</td>
+                <td>@item.Quarter</td>
+                <td>@item.Employee.FirstName @item.Employee.LastName</td>
+                <td>@item.Amount.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
